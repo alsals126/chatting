@@ -32,8 +32,6 @@ import javax.swing.Icon;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 
 public class owner{
 
@@ -115,27 +113,18 @@ public class owner{
 		textPane_2.setBounds(114, 26, 323, 21);
 		panel_1.add(textPane_2);
 		
-		RoundedButton2 btnNewButton1_1 = new RoundedButton2("CHANGE");
-		btnNewButton1_1.setBounds(460, 25, 88, 23);
+		RoundedButton1 btnNewButton1_1 = new RoundedButton1("CHANGE");
+		btnNewButton1_1.setBounds(460, 29, 88, 15);
 		panel_1.add(btnNewButton1_1);
 		
-		JTextPane textPane_2_1 = new JTextPane();
-		textPane_2_1.setBounds(22, 520, 458, 21);
-		frame.getContentPane().add(textPane_2_1);
-		
-		windowbuilder.RoundedButton2 btnNewButton1_1_1 = new windowbuilder.RoundedButton2("SEND");
-		btnNewButton1_1_1.setBounds(492, 519, 88, 23);
-		frame.getContentPane().add(btnNewButton1_1_1);
-		
 		JTextArea textArea = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		scrollPane.setBounds(22, 250, 558, 260);
-		frame.getContentPane().add(scrollPane);
+		textArea.setBounds(23, 241, 563, 260);
+		frame.getContentPane().add(textArea);
 		
 		frame.setTitle("\uCC44\uD305\uBC29 \uC8FC\uC778");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 609, 596); 	
+		frame.setBounds(100, 100, 609, 538); 	
 	}
 }
 

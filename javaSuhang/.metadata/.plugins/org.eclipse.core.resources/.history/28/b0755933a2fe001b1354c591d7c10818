@@ -127,15 +127,17 @@ public class owner{
 		btnNewButton1_1_1.setBounds(492, 519, 88, 23);
 		frame.getContentPane().add(btnNewButton1_1_1);
 		
-		JTextArea textArea = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(textArea);
+		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(22, 250, 558, 260);
 		frame.getContentPane().add(scrollPane);
+		
+		JTextArea textArea = new JTextArea();
+		scrollPane.setColumnHeaderView(textArea);
 		
 		frame.setTitle("\uCC44\uD305\uBC29 \uC8FC\uC778");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 609, 596); 	
+		frame.setBounds(100, 100, 609, 663); 	
 	}
 }
 

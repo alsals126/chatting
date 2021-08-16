@@ -135,7 +135,7 @@ public class owner{
 		frame.setTitle("\uCC44\uD305\uBC29 \uC8FC\uC778");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 609, 596); 	
+		frame.setBounds(100, 100, 609, 663); 	
 	}
 }
 
