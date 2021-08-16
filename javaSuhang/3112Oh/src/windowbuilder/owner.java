@@ -4,36 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Window.Type;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.SwingConstants;
-import javax.swing.JRadioButtonMenuItem;
-import java.awt.Component;
 
-import javax.swing.Action;
-import javax.swing.Box;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.JTextField;
-import javax.swing.DropMode;
-import javax.swing.Icon;
-import javax.swing.JTextPane;
-import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JScrollPane;
-import javax.swing.JScrollBar;
 
 public class owner{
 
@@ -69,126 +49,76 @@ public class owner{
 		frame = new JFrame();
 		frame.getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(0, 0, 0), null), "CHAT INFO  ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(20, 23, 347, 100);
-		frame.getContentPane().add(panel);
-		panel.setLayout(null);
+		JPanel chatInfoSec = new JPanel();
+		chatInfoSec.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(0, 0, 0), null), "CHAT INFO  ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		chatInfoSec.setBounds(20, 23, 347, 100);
+		frame.getContentPane().add(chatInfoSec);
+		chatInfoSec.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("IP");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 12));
-		lblNewLabel.setBounds(39, 30, 32, 15);
-		panel.add(lblNewLabel);
+		JLabel ipLabel = new JLabel("IP");
+		ipLabel.setFont(new Font("굴림", Font.BOLD, 12));
+		ipLabel.setBounds(39, 30, 32, 15);
+		chatInfoSec.add(ipLabel);
 		
-		JTextPane textPane = new JTextPane();
-		textPane.setBounds(114, 26, 179, 21);
-		panel.add(textPane);
+		JTextField ipText = new JTextField();
+		ipText.setBounds(114, 26, 179, 21);
+		ipText.setBorder(null);
+		chatInfoSec.add(ipText);
 		
-		JLabel lblPort = new JLabel("Port");
-		lblPort.setFont(new Font("굴림", Font.BOLD, 12));
-		lblPort.setBounds(39, 65, 32, 15);
-		panel.add(lblPort);
+		JLabel portLabel = new JLabel("Port");
+		portLabel.setFont(new Font("굴림", Font.BOLD, 12));
+		portLabel.setBounds(39, 65, 32, 15);
+		chatInfoSec.add(portLabel);
 		
-		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setBounds(114, 61, 179, 21);
-		panel.add(textPane_1);
+		JTextField portText = new JTextField();
+		portText.setBounds(114, 61, 179, 21);
+		portText.setBorder(null);
+		chatInfoSec.add(portText);
 		
-		RoundedButton1 btnNewButton1 = new RoundedButton1("OPEN");
-		btnNewButton1.setBounds(393, 30, 75, 90);
-		RoundedButton1 btnNewButton2 = new RoundedButton1("CLOSE");
-		btnNewButton2.setBounds(505, 30, 75, 90);
-		frame.getContentPane().add(btnNewButton1);
-		frame.getContentPane().add(btnNewButton2);
+		RoundedButton1 openBtn = new RoundedButton1("OPEN");
+		openBtn.setBounds(398, 30, 75, 90);
+		RoundedButton1 closeBtn = new RoundedButton1("CLOSE");
+		closeBtn.setBounds(505, 30, 75, 90);
+		frame.getContentPane().add(openBtn);
+		frame.getContentPane().add(closeBtn);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setLayout(null);
-		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(0, 0, 0), null), "CHAT INFO  ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel_1.setBounds(20, 150, 563, 69);
-		frame.getContentPane().add(panel_1);
+		JPanel mySec = new JPanel();
+		mySec.setLayout(null);
+		mySec.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(0, 0, 0), null), " MY  ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		mySec.setBounds(20, 133, 563, 69);
+		frame.getContentPane().add(mySec);
 		
-		JLabel lblNewLabel_1 = new JLabel("Name");
-		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(39, 30, 47, 15);
-		panel_1.add(lblNewLabel_1);
+		JLabel nameLabel = new JLabel("Name");
+		nameLabel.setFont(new Font("굴림", Font.BOLD, 12));
+		nameLabel.setBounds(39, 30, 47, 15);
+		mySec.add(nameLabel);
 		
-		JTextPane textPane_2 = new JTextPane();
-		textPane_2.setBounds(114, 26, 323, 21);
-		panel_1.add(textPane_2);
+		JTextField nameText = new JTextField();
+		nameText.setBounds(114, 26, 323, 21);
+		nameText.setBorder(null);
+		mySec.add(nameText);
 		
-		RoundedButton2 btnNewButton1_1 = new RoundedButton2("CHANGE");
-		btnNewButton1_1.setBounds(460, 25, 88, 23);
-		panel_1.add(btnNewButton1_1);
+		RoundedButton2 changeBtn = new RoundedButton2("CHANGE");
+		changeBtn.setBounds(460, 25, 88, 23);
+		mySec.add(changeBtn);
 		
-		JTextPane textPane_2_1 = new JTextPane();
-		textPane_2_1.setBounds(22, 520, 458, 21);
-		frame.getContentPane().add(textPane_2_1);
-		
-		windowbuilder.RoundedButton2 btnNewButton1_1_1 = new windowbuilder.RoundedButton2("SEND");
-		btnNewButton1_1_1.setBounds(492, 519, 88, 23);
-		frame.getContentPane().add(btnNewButton1_1_1);
-		
-		JTextArea textArea = new JTextArea();
-		JScrollPane scrollPane = new JScrollPane(textArea);
-		scrollPane.setBounds(22, 250, 558, 260);
+		JTextArea chatSec = new JTextArea();
+		JScrollPane scrollPane = new JScrollPane(chatSec);
+		scrollPane.setBounds(22, 230, 560, 260);
 		frame.getContentPane().add(scrollPane);
+		
+		JTextField chatText = new JTextField();
+		chatText.setBounds(22, 500, 458, 21);
+		chatText.setBorder(null);
+		frame.getContentPane().add(chatText);
+		
+		windowbuilder.RoundedButton2 sendBtn = new windowbuilder.RoundedButton2("SEND");
+		sendBtn.setBounds(492, 499, 88, 23);
+		frame.getContentPane().add(sendBtn);
 		
 		frame.setTitle("\uCC44\uD305\uBC29 \uC8FC\uC778");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(100, 100, 609, 596); 	
+		frame.setBounds(400, 120, 609, 573); 	
 	}
 }
-
-//버튼 디자인
-class RoundedButton1 extends JButton {
-   public RoundedButton1(String text) { super(text); decorate(); } 
-   protected void decorate() { setBorderPainted(false); setOpaque(false); }
-   @Override 
-   protected void paintComponent(Graphics g) {
-      Color c=new Color(255,255,255); //배경색 결정
-      Color o=new Color(0,0,0); //글자색 결정
-      int width = getWidth(); 
-      int height = getHeight(); 
-      Graphics2D graphics = (Graphics2D) g; 
-      graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-      if (getModel().isArmed()) { graphics.setColor(c.darker()); } 
-      else if (getModel().isRollover()) { graphics.setColor(c.brighter()); } 
-      else { graphics.setColor(c); } 
-      graphics.fillRoundRect(0, 0, width, height, 20, 20); 
-      FontMetrics fontMetrics = graphics.getFontMetrics(); 
-      Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds(); 
-      int textX = (width - stringBounds.width) / 2; 
-      int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent(); 
-      graphics.setColor(o); 
-      graphics.setFont(getFont()); 
-      graphics.drawString(getText(), textX, textY); 
-      graphics.dispose(); 
-      super.paintComponent(g); 
-      }
-   }
-class RoundedButton2 extends JButton {
-	   public RoundedButton2(String text) { super(text); decorate(); } 
-	   protected void decorate() { setBorderPainted(false); setOpaque(false); }
-	   @Override 
-	   protected void paintComponent(Graphics g) {
-	      Color c=new Color(255,255,255); //배경색 결정
-	      Color o=new Color(0,0,0); //글자색 결정
-	      int width = getWidth(); 
-	      int height = getHeight(); 
-	      Graphics2D graphics = (Graphics2D) g; 
-	      graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); 
-	      if (getModel().isArmed()) { graphics.setColor(c.darker()); } 
-	      else if (getModel().isRollover()) { graphics.setColor(c.brighter()); } 
-	      else { graphics.setColor(c); } 
-	      graphics.fillRoundRect(0, 0, width, height, 10, 10); 
-	      FontMetrics fontMetrics = graphics.getFontMetrics(); 
-	      Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds(); 
-	      int textX = (width - stringBounds.width) / 2; 
-	      int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent(); 
-	      graphics.setColor(o); 
-	      graphics.setFont(getFont()); 
-	      graphics.drawString(getText(), textX, textY); 
-	      graphics.dispose(); 
-	      super.paintComponent(g); 
-	      }
-	   }
