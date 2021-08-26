@@ -31,6 +31,8 @@ import javax.swing.UIManager;
 public class participant {
 
 	private JFrame frame;
+	private JTextField ipText;
+	private JTextField portText;
 	private JTextArea chatSec;
 	private JTextField chatText;
 	Socket socket;
@@ -79,7 +81,7 @@ public class participant {
 		ipLabel.setBounds(39, 30, 32, 15);
 		chatInfoSec.add(ipLabel);
 
-		JTextField ipText = new JTextField();
+		ipText = new JTextField();
 		ipText.setBounds(114, 26, 179, 21);
 		ipText.setBorder(null);
 		chatInfoSec.add(ipText);
@@ -89,7 +91,7 @@ public class participant {
 		portLabel.setBounds(39, 65, 32, 15);
 		chatInfoSec.add(portLabel);
 
-		JTextField portText = new JTextField();
+		portText = new JTextField();
 		portText.setBounds(114, 61, 179, 21);
 		portText.setBorder(null);
 		chatInfoSec.add(portText);
@@ -156,6 +158,13 @@ public class participant {
 		windowbuilder.RoundedButton2 sendBtn = new windowbuilder.RoundedButton2("SEND");
 		sendBtn.setBounds(492, 499, 88, 23);
 		frame.getContentPane().add(sendBtn);
+		sendBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				sendMessage();
+			}
+		});
 
 		frame.setTitle("\uCC44\uD305\uCC38\uC5EC");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -164,10 +173,18 @@ public class participant {
 	}
 
 	class ClientThread extends Thread {
+		String ownerIp;
+		int port;
+		
+		public ClientThread() {
+			ownerIp = ipText.getText();
+			port = Integer.parseInt(portText.getText());
+		}
 		@Override
 		public void run() {
 			try {
-				socket = new Socket("10.96.123.23", 7777);
+				System.out.println(ownerIp);
+				socket = new Socket(ownerIp, port);
 				chatSec.append("서버에 접속됐습니다.\n");
 
 				// 데이터 전송을 위한 스트림 생성(입추력 모두)

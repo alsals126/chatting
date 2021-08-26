@@ -190,28 +190,29 @@ public class owner {
 			} catch (IOException e) {
 				chatSec.append("클라이언트가 나갔습니다.\n");
 			}
-		}	
-	}
-	// 메시지 전송하는 기능 메소드
-	void sendMessage() {
-		String msg = chatText.getText(); // TextField에 써있는 글씨를 얻어오기
-		chatText.setText(""); // 입력 후 빈칸으로
-		chatSec.append(" [SERVER] : " + msg + "\n");// 1.TextArea(채팅창)에 표시
-		chatSec.setCaretPosition(chatSec.getText().length()); // 스크롤 따라가게
+		}
+		
+		// 메시지 전송하는 기능 메소드
+		void sendMessage() {
+			String msg = chatText.getText(); // TextField에 써있는 글씨를 얻어오기
+			chatText.setText(""); // 입력 후 빈칸으로
+			chatSec.append(" [SERVER] : " + msg + "\n");// 1.TextArea(채팅창)에 표시
+			chatSec.setCaretPosition(chatSec.getText().length()); // 스크롤 따라가게
 
-		// 2.상대방(Client)에게 메시지 전송하기
-		Thread t = new Thread() {
-			@Override
-			public void run() {
-				try {
-					dos.writeUTF(msg);
-					dos.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
+			// 2.상대방(Client)에게 메시지 전송하기
+			Thread t = new Thread() {
+				@Override
+				public void run() {
+					try {
+						dos.writeUTF(msg);
+						dos.flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		};
+			};
 
-		t.start();
-	}	
+			t.start();
+		}		
+	}
 }
