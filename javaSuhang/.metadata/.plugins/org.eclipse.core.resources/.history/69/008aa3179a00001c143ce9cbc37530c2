@@ -1,0 +1,7 @@
+package code;
+
+public class ownerCode {
+	public void server() {
+		ServerSocket server_socket = null;  //서버 생성을 위한 ServerSocket 
+	}
+}
