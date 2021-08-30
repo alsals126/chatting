@@ -1,0 +1,17 @@
+package windowbuilder;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+public class CommonMethod {
+	String myIp() {
+		InetAddress local;
+		try {
+			local = InetAddress.getLocalHost();
+			return local.getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return "[오류발생] 관리자에게 문의주세요";
+		}
+	}
+}

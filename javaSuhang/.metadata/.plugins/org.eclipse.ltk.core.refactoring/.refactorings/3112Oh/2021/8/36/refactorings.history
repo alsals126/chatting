@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;windowbuilder.commonMethod&apos; to &apos;CommonMethod&apos;&#x0D;&#x0A;- Original project: &apos;3112Oh&apos;&#x0D;&#x0A;- Original element: &apos;windowbuilder.commonMethod&apos;&#x0D;&#x0A;- Renamed element: &apos;windowbuilder.CommonMethod&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;commonMethod&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;windowbuilder{commonMethod.java[commonMethod" matchStrategy="1" name="CommonMethod" qualified="false" references="true" similarDeclarations="false" stamp="1630335626453" textual="false" version="1.0"/>
+</session>

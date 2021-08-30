@@ -33,11 +33,16 @@ public class participant {
 	private JFrame frame;
 	private JTextField ipText;
 	private JTextField portText;
+	private JTextField nameText;
 	private JTextArea chatSec;
 	private JTextField chatText;
 	Socket socket;
 	DataInputStream dis;
-	DataOutputStream dos;	
+	DataOutputStream dos;
+	
+	CommonMethod common = new CommonMethod();
+	String myName = "Client";
+	String hostName = "Host";
 
 	/**
 	 * Launch the application.
@@ -129,6 +134,7 @@ public class participant {
 		myIpText.setEditable(false);
 		myIpText.setBounds(114, 26, 437, 21);
 		myIpText.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		myIpText.setText(common.myIp());
 		mySec.add(myIpText);
 
 		JLabel nameLabel = new JLabel("Name");
@@ -136,14 +142,21 @@ public class participant {
 		nameLabel.setBounds(39, 65, 47, 15);
 		mySec.add(nameLabel);
 
-		JTextField nameText = new JTextField();
+		nameText = new JTextField();
 		nameText.setBounds(114, 61, 323, 21);
 		nameText.setBorder(null);
+		nameText.setText(myName);
 		mySec.add(nameText);
 
 		RoundedButton2 changeBtn = new RoundedButton2("CHANGE");
 		changeBtn.setBounds(463, 60, 88, 23);
 		mySec.add(changeBtn);
+		changeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				changeName(myName);
+			}
+		});
 
 		chatSec = new JTextArea();
 		JScrollPane scrollPane = new JScrollPane(chatSec);
@@ -169,17 +182,37 @@ public class participant {
 		frame.setTitle("\uCC44\uD305\uCC38\uC5EC");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBackground(Color.WHITE);
-		frame.setBounds(420, 120, 609, 573);
+		frame.setBounds(720, 120, 609, 573);
+	}
+	void changeName(String n) {
+		myName = nameText.getText();
+		
+		String msg = n + "," + myName + "";
+		chatSec.append("\n" + n + "님의 이름이 " + myName + "(으)로 변경되었습니다.\n");
+		
+		Thread t = new Thread() {
+			@Override
+			public void run() {
+				try {
+					dos.writeUTF(msg);
+					dos.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		t.start();
 	}
 
 	class ClientThread extends Thread {
 		String ownerIp;
 		int port;
-		
+
 		public ClientThread() {
 			ownerIp = ipText.getText();
 			port = Integer.parseInt(portText.getText());
 		}
+
 		@Override
 		public void run() {
 			try {
@@ -197,7 +230,14 @@ public class participant {
 
 				while (true) {// 상대방 메시지 받기
 					String msg = dis.readUTF();
-					chatSec.append(" [SERVER] : " + msg + "\n");
+					
+					if(msg.contains(hostName + ",")) {
+						chatSec.append("\n" + hostName + "님의 이름이 ");
+						hostName = msg.substring(hostName.length()+1);
+						chatSec.append(hostName + "(으)로 변경되었습니다.\n");
+					}
+					else
+						chatSec.append(" [" + hostName + "] : " + msg + "\n");
 					chatSec.setCaretPosition(chatSec.getText().length());
 				}
 			} catch (UnknownHostException e) {
@@ -212,7 +252,7 @@ public class participant {
 	void sendMessage() {
 		String msg = chatText.getText(); // TextField에 써있는 글씨를 얻어오기
 		chatText.setText(""); // 입력 후 빈칸으로
-		chatSec.append(" [Clinet] : " + msg + "\n");// 1.TextArea(채팅창)에 표시
+		chatSec.append(" [" + myName + "] : " + msg + "\n");// 1.TextArea(채팅창)에 표시
 		chatSec.setCaretPosition(chatSec.getText().length());
 
 		// 2.상대방(Server)에게 메시지 전송하기
