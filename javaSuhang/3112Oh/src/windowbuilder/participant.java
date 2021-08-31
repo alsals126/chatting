@@ -14,9 +14,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -116,6 +117,21 @@ public class participant {
 				clientThread.start();
 			}
 		});
+		outBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					if(socket != null) {
+						socket.close();
+					}else {
+						chatSec.append("채팅방에 접속을 하지 않았습니다\n");
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 
 		JPanel mySec = new JPanel();
 		mySec.setLayout(null);
@@ -159,6 +175,7 @@ public class participant {
 		});
 
 		chatSec = new JTextArea();
+		chatSec.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(chatSec);
 		scrollPane.setBounds(22, 255, 560, 235);
 		frame.getContentPane().add(scrollPane);
@@ -166,6 +183,21 @@ public class participant {
 		chatText = new JTextField();
 		chatText.setBounds(22, 500, 458, 21);
 		chatText.setBorder(null);
+		chatText.addKeyListener(new KeyAdapter() {
+			@Override
+
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+
+				// 입력받은 키가 엔터인지
+				int keyCode = e.getKeyCode();
+				switch (keyCode) {	
+					case KeyEvent.VK_ENTER:
+						sendMessage();
+					break;
+				}
+			}
+		});
 		frame.getContentPane().add(chatText);
 
 		windowbuilder.RoundedButton2 sendBtn = new windowbuilder.RoundedButton2("SEND");
@@ -174,7 +206,6 @@ public class participant {
 		sendBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				sendMessage();
 			}
 		});
@@ -216,11 +247,10 @@ public class participant {
 		@Override
 		public void run() {
 			try {
-				System.out.println(ownerIp);
 				socket = new Socket(ownerIp, port);
-				chatSec.append("서버에 접속됐습니다.\n");
+				chatSec.append("채팅방에 접속됐습니다.\n");
 
-				// 데이터 전송을 위한 스트림 생성(입추력 모두)
+				// 데이터 전송을 위한 스트림 생성(입출력 모두)
 				InputStream is = socket.getInputStream();
 				OutputStream os = socket.getOutputStream();
 
@@ -243,7 +273,7 @@ public class participant {
 			} catch (UnknownHostException e) {
 				chatSec.append("서버 주소가 이상합니다.\n");
 			} catch (IOException e) {
-				chatSec.append("서버와 연결이 끊겼습니다.\n");
+				chatSec.append("채팅방과의 연결이 끊겼습니다.\n");
 			}
 		}
 	}
@@ -252,10 +282,10 @@ public class participant {
 	void sendMessage() {
 		String msg = chatText.getText(); // TextField에 써있는 글씨를 얻어오기
 		chatText.setText(""); // 입력 후 빈칸으로
-		chatSec.append(" [" + myName + "] : " + msg + "\n");// 1.TextArea(채팅창)에 표시
+		chatSec.append(" [" + myName + "] : " + msg + "\n");// 채팅창에 표시
 		chatSec.setCaretPosition(chatSec.getText().length());
 
-		// 2.상대방(Server)에게 메시지 전송하기
+		// 상대방에게 메시지 전송하기
 		// 아웃풋 스트림을 통해 상대방에 데이터 전송
 		// 네트워크 작업은 별도의 Thread가 하는 것이 좋음
 		Thread t = new Thread() {

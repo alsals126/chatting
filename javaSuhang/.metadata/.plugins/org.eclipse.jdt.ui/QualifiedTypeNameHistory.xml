@@ -9,7 +9,6 @@
     <fullyQualifiedTypeName name="java.io.BufferedReader"/>
     <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
     <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="code.Server"/>
     <fullyQualifiedTypeName name="java.net.ServerSocket"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
@@ -23,4 +22,8 @@
     <fullyQualifiedTypeName name="java.io.DataOutputStream"/>
     <fullyQualifiedTypeName name="java.io.InputStream"/>
     <fullyQualifiedTypeName name="java.io.OutputStream"/>
+    <fullyQualifiedTypeName name="windowbuilder.CommonMethod"/>
+    <fullyQualifiedTypeName name="java.net.SocketException"/>
+    <fullyQualifiedTypeName name="java.net.BindException"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 </qualifiedTypeNameHistroy>

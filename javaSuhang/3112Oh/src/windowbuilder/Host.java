@@ -8,13 +8,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.SocketException;
 
 import javax.swing.JPanel;
 
@@ -33,10 +35,10 @@ public class Host {
 	private JTextArea chatSec;
 	private JTextField chatText;
 	ServerSocket serverSocket;
-	Socket socket;
+	Socket socket = null;
 	DataInputStream dis;
 	DataOutputStream dos;
-	
+
 	CommonMethod common = new CommonMethod();
 	String myName = "Host";
 	String clientName = "Client";
@@ -103,9 +105,28 @@ public class Host {
 		openBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ServerThread serverThread = new ServerThread();
-				serverThread.setDaemon(true); // 메인 끝나면 같이 종료
-				serverThread.start();
+				if (socket != null)
+					chatSec.append("다른 채팅창을 이용해주세요\n");
+				else {
+					ServerThread serverThread = new ServerThread();
+					serverThread.setDaemon(true); // 메인 끝나면 같이 종료
+					serverThread.start();
+				}
+			}
+		});
+		closeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(socket != null) {
+						socket.close();
+						serverSocket.close();
+					}else {
+						serverSocket.close();
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -146,6 +167,21 @@ public class Host {
 		chatText = new JTextField();
 		chatText.setBounds(22, 500, 458, 21);
 		chatText.setBorder(null);
+		chatText.addKeyListener(new KeyAdapter() {
+			@Override
+
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+
+				// 입력받은 키가 엔터인지
+				int keyCode = e.getKeyCode();
+				switch (keyCode) {
+				case KeyEvent.VK_ENTER:
+					sendMessage();
+					break;
+				}
+			}
+		});
 		frame.getContentPane().add(chatText);
 
 		windowbuilder.RoundedButton2 sendBtn = new windowbuilder.RoundedButton2("SEND");
@@ -154,7 +190,6 @@ public class Host {
 		sendBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				sendMessage();
 			}
 		});
@@ -164,13 +199,13 @@ public class Host {
 		frame.setBackground(Color.WHITE);
 		frame.setBounds(100, 120, 609, 573);
 	}
-	
+
 	void changeName(String n) {
 		myName = nameText.getText();
-		
+
 		String msg = n + "," + myName + "";
 		chatSec.append("\n" + n + "님의 이름이 " + myName + "(으)로 변경되었습니다.\n");
-		
+
 		Thread t = new Thread() {
 			@Override
 			public void run() {
@@ -184,10 +219,10 @@ public class Host {
 		};
 		t.start();
 	}
-	
-	class ServerThread extends Thread{
+
+	class ServerThread extends Thread {
 		int port;
-		
+
 		public ServerThread() {
 			port = Integer.parseInt(portText.getText());
 		}
@@ -207,21 +242,25 @@ public class Host {
 				while (true) {
 					// 상대방이 보내온 데이터를 읽기
 					String msg = dis.readUTF();// 상대방이 보낼때까지 대기
-					
-					if(msg.contains(clientName + ",")) {
+
+					if (msg.contains(clientName + ",")) {
 						chatSec.append("\n" + clientName + "님의 이름이 ");
-						clientName = msg.substring(clientName.length()+1);
+						clientName = msg.substring(clientName.length() + 1);
 						chatSec.append(clientName + "(으)로 변경되었습니다.\n");
-					}
-					else
+					} else
 						chatSec.append(" [" + clientName + "] : " + msg + "\n");
 					chatSec.setCaretPosition(chatSec.getText().length());
 				}
+			} catch (SocketException e) {
+				chatSec.append("채팅방이 종료되었습니다.\n");
+				chatSec.append("----------------------------------------\n");
 			} catch (IOException e) {
+				System.out.println(e);
 				chatSec.append("클라이언트가 나갔습니다.\n");
 			}
-		}	
+		}
 	}
+
 	// 메시지 전송하는 기능 메소드
 	void sendMessage() {
 		String msg = chatText.getText(); // TextField에 써있는 글씨를 얻어오기
@@ -242,5 +281,5 @@ public class Host {
 			}
 		};
 		t.start();
-	}	
+	}
 }
